@@ -1,0 +1,75 @@
+# MemoryRestart
+Monitor the server's memory and restart it when appropriate.  
+May be a good choice for servers with small memory.  
+
+## Command
+All commands are only available to the op.
+- /memoryrestart reload  
+  - Reload `config.yml` and the plugin
+- /memoryrestart enable
+  - Make the plugin enabled. The `enable` option in `config.yml` will also be modified.
+- /memoryrestart disable
+  - Make the plugin disabled. The `enable` option in `config.yml` will also be modified.
+- /memoryrestart status
+  - Shows the current memory allocated by the server, the `limitMemory` option in `config.yml`, and the `enable` option in `config.yml`.
+- /memoryrestart suspend
+  - Suspend the restart when it enters the restart countdown phase and the plugin will restart detecting memory after `detectDelay` 
+
+## Config
+```yml
+# Whether to enable the plugin
+enable: true
+# The limited memory size(MB). Once this value is exceeded the server will be ready to restart.
+# The memory here refers to the amount of memory allocated by JVM,
+# which is equal to the Allocated memory obtained by using the /gc command.
+limitMemory: 2048
+# Time interval to detect memory(sec)
+detectInterval: 5
+# Time delay to detect memory(sec)
+# Since memory is generally higher during the first few minutes of server start,
+# it is recommended to manually adjust this parameter in order to skip this phase,
+# otherwise it may cause the server to keep restarting.
+detectDelay: 300
+# Time delay to restart the server(sec) after detecting that the memory has exceeded `limitMemory`,
+# during which the op can use the `/memoryrestart suspend` command to suspend the restart.
+restartDelay: 60
+
+# It's best to choose between title and message to alert players of an upcoming server restart.
+# {{leftTime}} is is a special escape character that will be parsed for the remainder of the time.
+countDown:
+  title:
+    enable: true
+    # The title text
+    titleMsg: '&cServer will restart'
+    # The subtitle text
+    subtitleMsg: '&cin {{leftTime}} !'
+    # Time in ticks for titles to fade in
+    fadeIn: 10
+    # Time in ticks for titles to stay
+    stay: 10
+    # Time in ticks for titles to fade out
+    fadeOut: 10
+  message:
+    enable: false
+    # The message text that will be broadcast to all players
+    msg: '&cServer will restart in {{leftTime}} !'
+
+# It's best to choose between title and message to alert players of suspending server restart.
+suspend:
+  title:
+    enable: true
+    # The title text
+    titleMsg: '&eRestart is suspended'
+    # The subtitle text
+    subtitleMsg: ''
+    # Time in ticks for titles to fade in
+    fadeIn: 10
+    # Time in ticks for titles to stay
+    stay: 10
+    # Time in ticks for titles to fade out
+    fadeOut: 10
+  message:
+    enable: false
+    # The message text that will be broadcast to all players
+    msg: '&eRestart is suspended'
+```

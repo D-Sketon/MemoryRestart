@@ -1,0 +1,14 @@
+name: MemoryRestart
+version: '${project.version}'
+main: top.dsketon.memoryrestart.MemoryRestart
+api-version: 1.13
+authors: [ D_Sketon ]
+description: Monitor the server's memory and restart it when appropriate.
+website: https://d-sketon.top
+commands:
+  memoryrestart:
+    description: main command for MemoryRestart
+permissions:
+  MemoryRestart.memoryrestart:
+    description: main command for MemoryRestart
+    default: op
